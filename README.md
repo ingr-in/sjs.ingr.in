@@ -1,2 +1,2 @@
-# dns
-dns ka sampadit mahiti
+# sjs
+sjs  scss javascript
