@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Surya Siddhanta · Panchang UX</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(145deg, #f9f5ed 0%, #f0ebe1 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .container {
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 2.5rem;
+      padding: 2.2rem 2rem;
+      box-shadow: 0 25px 45px -12px rgba(90, 60, 30, 0.25),
+                  inset 0 1px 2px rgba(255, 245, 235, 0.8);
+      border: 1px solid rgba(255, 241, 230, 0.6);
+      transition: all 0.2s ease;
+    }
+
+    h1 {
+      font-size: 1.9rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      color: #3a2e24;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1.8rem;
+      border-left: 5px solid #c97c4d;
+      padding-left: 1.3rem;
+    }
+
+    h1 span {
+      background: #e6d5bf;
+      font-size: 1rem;
+      font-weight: 400;
+      padding: 0.2rem 1rem;
+      border-radius: 30px;
+      color: #4f3f30;
+      margin-left: 0.5rem;
+    }
+
+    .coord-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      align-items: flex-end;
+      background: #f2e7db;
+      padding: 1.2rem 1.5rem;
+      border-radius: 2rem;
+    }
+
+    .input-group {
+      flex: 1 1 180px;
+    }
+
+    .input-group label {
+      display: block;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+      color: #735f4b;
+      margin-bottom: 0.25rem;
+    }
+
+    .input-group input {
+      width: 100%;
+      background: white;
+      border: 1px solid #dccfc1;
+      border-radius: 2rem;
+      padding: 0.75rem 1.2rem;
+      font-size: 1rem;
+      color: #2f241b;
+      outline: none;
+      transition: 0.15s;
+    }
+
+    .input-group input:focus {
+      border-color: #b77f58;
+      box-shadow: 0 0 0 3px rgba(201, 124, 77, 0.2);
+    }
+
+    .button-group {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+    }
+
+    .btn-primary {
+      background: #9b6e4b;
+      border: none;
+      padding: 0.8rem 2rem;
+      border-radius: 3rem;
+      font-weight: 500;
+      font-size: 1rem;
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 8px 18px -6px #b1a087;
+      transition: 0.15s;
+      border: 1px solid #c18e64;
+      white-space: nowrap;
+    }
+
+    .btn-primary:hover {
+      background: #b07f58;
+      transform: scale(0.98);
+      box-shadow: 0 4px 10px -3px #a68d72;
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 1px solid #b29e89;
+      padding: 0.8rem 1.5rem;
+      border-radius: 3rem;
+      font-weight: 500;
+      color: #5d4b39;
+      cursor: pointer;
+      transition: 0.1s;
+      white-space: nowrap;
+    }
+
+    .btn-outline:hover {
+      background: #e0d1c0;
+      border-color: #8f735b;
+    }
+
+    /* loading & error */
+    .message-panel {
+      margin: 1.5rem 0 1rem;
+      border-radius: 2rem;
+      padding: 1.2rem;
+      text-align: center;
+      font-weight: 450;
+    }
+
+    .loading {
+      background: #ede5d9;
+      color: #886b50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+    }
+
+    .loading .spinner {
+      width: 1.4rem;
+      height: 1.4rem;
+      border: 3px solid #dacbbc;
+      border-top-color: #976b44;
+      border-radius: 50%;
+      animation: spin 0.9s infinite linear;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .error {
+      background: #ffe7df;
+      color: #aa5636;
+      border: 1px solid #f7c9b6;
+    }
+
+    .error i { font-style: normal; margin-right: 6px; font-size: 1.2rem; }
+
+    /* Panchang card inner */
+    .panchang-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 500;
+      color: #3b2f24;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .section-title i { font-size: 1.3rem; }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+    }
+
+    .info-chip {
+      background: #f5ede2;
+      border-radius: 1.8rem;
+      padding: 0.9rem 1.2rem;
+      box-shadow: inset 0 1px 4px #faf3ea, 0 4px 8px -6px #ac9f90;
+    }
+
+    .info-chip .label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      color: #917b64;
+      font-weight: 600;
+    }
+
+    .info-chip .value {
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: #32271e;
+      margin-top: 0.2rem;
+      line-height: 1.3;
+      word-break: break-word;
+    }
+
+    .twin-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .twin-row .info-chip {
+      flex: 1 1 160px;
+    }
+
+    /* planets */
+    .planets-wrapper {
+      background: #ece2d5;
+      border-radius: 2rem;
+      padding: 1.5rem;
+      margin-top: 0.5rem;
+    }
+
+    .planet-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .planet-item {
+      background: #fcf5ec;
+      padding: 0.6rem 1rem;
+      border-radius: 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 1rem;
+      box-shadow: 0 2px 5px rgba(128, 100, 70, 0.1);
+      border: 1px solid #e5d5c2;
+    }
+
+    .planet-item div:first-child {
+      font-weight: 500;
+      color: #5d4735;
+      text-transform: capitalize;
+    }
+
+    .planet-item div:last-child {
+      background: #dacbbc;
+      padding: 0.15rem 0.7rem;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      color: #2f1f12;
+      font-weight: 480;
+    }
+
+    .footnote {
+      font-size: 0.75rem;
+      color: #9b8a78;
+      margin-top: 1rem;
+      text-align: right;
+      border-top: 1px dashed #dac9b6;
+      padding-top: 0.8rem;
+    }
+
+    .footnote a {
+      color: #7d6149;
+      text-decoration: none;
+    }
+
+    /* default hidden */
+    .hidden {
+      display: none !important;
+    }
+
+    /* small spacing */
+    .attribution {
+      text-align: center;
+      margin-top: 1.2rem;
+      font-size: 0.8rem;
+      color: #9a8979;
+    }
+  </style>
+  <!-- Font fallback only – no external icons, using unicode when needed -->
+</head>
+<body>
+<div class="container">
+  <div class="card">
+    <h1>
+      🌄 Sūrya Pañchāṅga
+      <span>वाराणसी</span>
+    </h1>
+
+    <!-- coordinates card -->
+    <div class="coord-bar">
+      <div class="input-group">
+        <label>🌐 Latitude</label>
+        <input type="number" id="lat" value="25.3176" step="any" placeholder="e.g. 25.3176">
+      </div>
+      <div class="input-group">
+        <label>📍 Longitude</label>
+        <input type="number" id="lon" value="82.9739" step="any" placeholder="e.g. 82.9739">
+      </div>
+      <div class="button-group">
+        <button class="btn-primary" onclick="fetchPanchang()">⟳ Fetch</button>
+        <button class="btn-outline" onclick="useDefaultLocation()">🪷 Default</button>
+      </div>
+    </div>
+
+    <!-- loading indicator -->
+    <div id="loading" class="message-panel loading hidden">
+      <div class="spinner"></div> 
+      <span>Graha-niyama … consulting stars</span>
+    </div>
+
+    <!-- error panel -->
+    <div id="error" class="message-panel error hidden">
+      <i>⚠️</i> Could not retrieve Pañchāṅga. Check coordinates or try again.
+    </div>
+
+    <!-- main panchang card (hidden until data loads) -->
+    <div id="panchangCard" class="panchang-grid hidden">
+
+      <!-- Panchang core 6 items -->
+      <div>
+        <div class="section-title"><span>📅</span> Tithi & Nakshatra</div>
+        <div class="info-grid">
+          <div class="info-chip"><span class="label">tithi</span><div class="value" id="tithi">—</div></div>
+          <div class="info-chip"><span class="label">paksha</span><div class="value" id="paksha">—</div></div>
+          <div class="info-chip"><span class="label">month</span><div class="value" id="month">—</div></div>
+          <div class="info-chip"><span class="label">nakshatra</span><div class="value" id="nakshatra">—</div></div>
+          <div class="info-chip"><span class="label">yoga</span><div class="value" id="yoga">—</div></div>
+          <div class="info-chip"><span class="label">karana</span><div class="value" id="karana">—</div></div>
+        </div>
+      </div>
+
+      <!-- Sun & Moon times -->
+      <div>
+        <div class="section-title"><span>☀️🌙</span> Graha timings</div>
+        <div class="twin-row">
+          <div class="info-chip"><span class="label">sunrise</span><div class="value" id="sunrise">—</div></div>
+          <div class="info-chip"><span class="label">sunset</span><div class="value" id="sunset">—</div></div>
+          <div class="info-chip"><span class="label">moonrise</span><div class="value" id="moonrise">—</div></div>
+          <div class="info-chip"><span class="label">moonset</span><div class="value" id="moonset">—</div></div>
+        </div>
+      </div>
+
+      <!-- Planetary positions (dynamic) -->
+      <div>
+        <div class="section-title"><span>🪐</span> Graha positions (zodiacal °)</div>
+        <div class="planets-wrapper">
+          <div id="planets" class="planet-grid">
+            <!-- filled by js -->
+          </div>
+        </div>
+      </div>
+      <div class="footnote">
+        ⚱️ data based on <strong>sipa.ingr.in</strong> · Sūrya Siddhānta tradition
+      </div>
+    </div> <!-- /panchangCard -->
+  </div> <!-- /card -->
+  <div class="attribution">
+    🌿 उत्तिष्ठत जाग्रत • move with the sky
+  </div>
+</div>
+
+<script>
+  // --------------------------------------------------------------
+  // Enhanced fetch with modern UI feedback
+  // --------------------------------------------------------------
+  function fetchPanchang() {
+    const lat = document.getElementById('lat').value.trim();
+    const lon = document.getElementById('lon').value.trim();
+
+    // basic validation
+    if (!lat || !lon || isNaN(lat) || isNaN(lon)) {
+      alert('Please enter valid numeric coordinates.');
+      return;
+    }
+
+    const loadingEl = document.getElementById('loading');
+    const errorEl = document.getElementById('error');
+    const cardEl = document.getElementById('panchangCard');
+
+    // show loading, hide others
+    loadingEl.classList.remove('hidden');
+    errorEl.classList.add('hidden');
+    cardEl.classList.add('hidden');
+
+    // Build API url (using same endpoint)
+    const url = `https://sipa.ingr.in/pages/sti.php?sr=json&ajax=1&req=ajax&sanvi=subhmstu&lat=${lat}&lon=${lon}`;
+
+    fetch(url)
+      .then(res => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json();
+      })
+      .then(data => {
+        loadingEl.classList.add('hidden');
+        console.log('Panchang raw data:', data);
+
+        // check success status
+        if (!data || data.status !== 'success') {
+          errorEl.classList.remove('hidden');
+          return;
+        }
+
+        // ----- populate panchang fields -----
+        // panchang object
+        if (data.panchang) {
+          setText('tithi', data.panchang.tithi || '—');
+          setText('paksha', data.panchang.paksha || '—');
+          setText('month', data.panchang.month || '—');
+          setText('nakshatra', data.panchang.nakshatra || '—');
+          setText('yoga', data.panchang.yoga || '—');
+          setText('karana', data.panchang.karana || '—');
+        } else {
+          // fallback blank
+          ['tithi','paksha','month','nakshatra','yoga','karana'].forEach(id => setText(id, '—'));
+        }
+
+        // sun times
+        if (data.sun_times) {
+          setText('sunrise', data.sun_times.sunrise || '—');
+          setText('sunset', data.sun_times.sunset || '—');
+        } else {
+          setText('sunrise', '—'); setText('sunset', '—');
+        }
+
+        // moon times
+        if (data.moon_times) {
+          setText('moonrise', data.moon_times.moonrise || '—');
+          setText('moonset', data.moon_times.moonset || '—');
+        } else {
+          setText('moonrise', '—'); setText('moonset', '—');
+        }
+
+        // planets container
+        const planetsDiv = document.getElementById('planets');
+        planetsDiv.innerHTML = '';  // clear previous
+
+        if (data.planet_positions && typeof data.planet_positions === 'object') {
+          const entries = Object.entries(data.planet_positions);
+          if (entries.length === 0) {
+            planetsDiv.innerHTML = '<div class="info-chip" style="grid-column:1/-1; text-align:center;">✨ no graha data</div>';
+          } else {
+            entries.forEach(([planet, pos]) => {
+              let div = document.createElement('div');
+              div.className = 'planet-item';
+
+              // format planet name nicely
+              const displayPlanet = planet.charAt(0).toUpperCase() + planet.slice(1);
+              let degreeVal = '—';
+              if (pos !== undefined && pos !== null) {
+                // try to convert to number, show up to 2 decimals
+                const num = parseFloat(pos);
+                if (!isNaN(num)) degreeVal = num.toFixed(2) + '°';
+                else degreeVal = String(pos);
+              }
+              div.innerHTML = `<div>${displayPlanet}</div><div>${degreeVal}</div>`;
+              planetsDiv.appendChild(div);
+            });
+          }
+        } else {
+          planetsDiv.innerHTML = '<div class="info-chip" style="grid-column:1/-1;">🪐 planet data unavailable</div>';
+        }
+
+        // finally show the card
+        cardEl.classList.remove('hidden');
+      })
+      .catch(err => {
+        console.error('Fetch error:', err);
+        loadingEl.classList.add('hidden');
+        errorEl.classList.remove('hidden');
+        cardEl.classList.add('hidden');
+      });
+  }
+
+  // helper to set text content safely
+  function setText(id, value) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = value;
+  }
+
+  // default location: Varanasi (lat/lon as in placeholder)
+  function useDefaultLocation() {
+    document.getElementById('lat').value = '25.3176';
+    document.getElementById('lon').value = '82.9739';
+    fetchPanchang();  // immediately fetch
+  }
+
+  // auto-load on page load (with varanasi default)
+  window.onload = function() {
+    // set default fields explicitly
+    document.getElementById('lat').value = '25.3176';
+    document.getElementById('lon').value = '82.9739';
+    fetchPanchang();
+  };
+
+  // also allow enter key? but fine.
+</script>
+
+<!-- small addition for better ux: click default also triggers fetch, function already defined -->
+</body>
+</html>

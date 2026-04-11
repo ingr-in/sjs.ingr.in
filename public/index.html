@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="Ingr.in - Modern Web Platform">
+<meta name="keywords" content="ingr, social, platform">
+<meta name="author" content="Ingr">
+<title>Ingr.in - Auto-Adjust Footer</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<!-- App Info -->
+  <meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#000000">
+<link rel="manifest" href="https://ingr.in/crush/manifest.json?sr=json&id=love&saanu=tyo83nsteoiej">
+<script defer>
+if ("serviceWorker" in navigator) {
+navigator.serviceWorker.register("https://ingr.in/crush/sw.js");
+}
+</script>
+<style>@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Space+Grotesk:wght@400;500;700&family=Russo+One&family=Great+Vibes&display=swap');
+
+/* RESET */
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+transition:all .25s ease-in-out;
+}
+
+html{
+scroll-behavior:smooth;
+}
+
+/* VARIABLES */
+:root{
+--gradient-start:#f43f5e;
+--gradient-end:#8b5cf6;
+--accent:#2dd4bf;
+--bg-soft:#fff9f9;
+--card-bg:rgba(255,255,255,.85);
+--text-dark:#1e1b4b;
+--text-light:#f8fafc;
+--shadow:0 20px 30px -10px rgba(139,92,246,.3);
+--radius:40px;
+}
+
+/* BODY */
+body{
+font-family:'Quicksand',sans-serif;
+background:linear-gradient(145deg,#ffe4e6 0%,#ede9fe 100%);
+min-height:100vh;
+display:flex;
+flex-direction:column;
+color:var(--text-dark);
+line-height:1.5;
+}
+
+/* BACKGROUND GLOW */
+body::before{
+content:'';
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:
+radial-gradient(circle at 30% 30%,rgba(244,63,94,.15) 0%,transparent 40%),
+radial-gradient(circle at 80% 70%,rgba(139,92,246,.12) 0%,transparent 45%);
+z-index:-1;
+pointer-events:none;
+}
+
+/* CONTAINER */
+.container{
+max-width:1200px;
+margin:0 auto;
+padding:0 24px;
+width:100%;
+}
+
+/* HEADER */
+header{
+position:sticky;
+top:16px;
+margin:16px auto 0;
+z-index:100;
+background:rgba(255,255,255,.5);
+backdrop-filter:blur(12px);
+border-radius:80px;
+width:calc(100% - 32px);
+max-width:1200px;
+left:0;
+right:0;
+box-shadow:0 8px 28px -8px rgba(0,0,0,.15);
+padding:8px 20px;
+border:1px solid rgba(255,255,255,.6);
+}
+
+.header-content{
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+width:100%;
+}
+
+/* LOGO */
+.logo{
+font-family:'Space Grotesk',sans-serif;
+font-weight:700;
+font-size:1.8rem;
+background:linear-gradient(135deg,var(--gradient-start),var(--gradient-end));
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+display:flex;
+align-items:center;
+gap:8px;
+}
+
+/* NAVIGATION */
+.nav-links{
+display:flex;
+gap:8px;
+background:rgba(255,255,255,.35);
+padding:4px;
+border-radius:60px;
+}
+
+.nav-links a{
+padding:10px 20px;
+border-radius:40px;
+font-weight:600;
+font-size:1rem;
+text-decoration:none;
+color:#1e1b4b;
+display:inline-flex;
+align-items:center;
+gap:6px;
+border:1px solid transparent;
+}
+
+.nav-links a:hover{
+background:white;
+border-color:#fbcfe8;
+box-shadow:0 6px 14px #fbcfe8;
+color:#f43f5e;
+}
+
+.nav-links a.active{
+background:white;
+color:#f43f5e;
+border:1px solid #fbcfe8;
+box-shadow:0 6px 16px rgba(244,63,94,.25);
+}
+
+/* MAIN CARD */
+main{
+flex:1;
+margin:40px 24px 20px 24px;
+background:var(--card-bg);
+backdrop-filter:blur(8px);
+border-radius:56px;
+padding:2.5rem 2rem;
+box-shadow:var(--shadow);
+border:1px solid rgba(255,255,255,.7);
+font-size:1.3rem;
+min-height:350px;
+animation:fadeIn .35s ease;
+}
+
+/* PAGE FADE */
+@keyframes fadeIn{
+from{
+opacity:0;
+transform:translateY(10px);
+}
+to{
+opacity:1;
+transform:translateY(0);
+}
+}
+
+/* MESSAGE BOX */
+.SlE{
+text-align:center;
+font-family:'Space Grotesk',sans-serif;
+background:rgba(255,255,255,.35);
+border-radius:48px;
+padding:2rem;
+}
+
+.SlE h2{
+font-size:3rem;
+background:linear-gradient(145deg,#f43f5e,#8b5cf6);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+margin-bottom:.5rem;
+}
+
+.SlE p{
+font-size:1.4rem;
+color:#334155;
+}
+
+/* LOADING */
+.loading{
+text-align:center;
+padding:40px;
+font-size:1.4rem;
+font-weight:600;
+color:#64748b;
+}
+
+/* FOOTER */
+footer{
+background:rgba(255,237,240,.7);
+backdrop-filter:blur(12px);
+border-radius:60px 60px 0 0;
+margin:40px 16px 0;
+padding:16px 24px 28px;
+box-shadow:0 -10px 30px -10px #d8b4fe;
+border-top:2px solid rgba(255,255,255,.7);
+}
+
+.footer-title{
+display:flex;
+justify-content:center;
+align-items:center;
+gap:12px;
+font-size:1.6rem;
+font-weight:700;
+cursor:pointer;
+padding:14px 24px;
+background:rgba(255,255,255,.6);
+border-radius:80px;
+margin-bottom:8px;
+}
+
+.footer-content{
+display:none;
+gap:24px;
+padding:24px 16px;
+transition:all .35s ease;
+}
+
+footer.active .footer-content{
+display:flex;
+flex-direction:column;
+align-items:center;
+}
+
+/* FOOTER LINKS */
+
+.footer-links a{
+text-decoration:none;
+color:#3b2c6b;
+font-weight:600;
+background:rgba(255,255,255,.5);
+padding:8px 20px;
+border-radius:40px;
+border:1px solid white;
+}
+
+.footer-links a:hover{
+background:white;
+box-shadow:0 8px 18px #fbcfe8;
+}
+
+/* COPYRIGHT */
+.copyright{
+font-size:1rem;
+text-align:center;
+background:rgba(255,255,255,.4);
+padding:10px 20px;
+border-radius:60px;
+}
+
+/* BACK TO TOP */
+.back-to-top{
+position:fixed;
+bottom:30px;
+right:20px;
+background:#f43f5e;
+color:white;
+width:55px;
+height:55px;
+border-radius:30px;
+display:flex;
+align-items:center;
+justify-content:center;
+cursor:pointer;
+box-shadow:0 10px 25px #f0abfc;
+opacity:0;
+pointer-events:none;
+z-index:99;
+}
+
+.back-to-top.visible{
+opacity:1;
+pointer-events:auto;
+}
+
+.back-to-top:hover{
+background:#8b5cf6;
+transform:scale(1.1) translateY(-4px);
+}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{
+width:8px;
+height:8px;
+}
+
+::-webkit-scrollbar-thumb{
+background:linear-gradient(180deg,#f43f5e,#8b5cf6);
+border-radius:20px;
+}
+
+::-webkit-scrollbar-track{
+background:transparent;
+}
+
+/* MOBILE */
+@media(max-width:700px){
+
+header{
+width:calc(100% - 20px);
+margin:10px auto 0;
+padding:8px 15px;
+}
+
+.header-content{
+flex-direction:column;
+gap:12px;
+}
+
+.nav{
+overflow-x:auto;
+white-space:nowrap;
+scroll-behavior:smooth;
+}
+
+.nav::-webkit-scrollbar{
+display:none;
+}
+
+.nav::after{
+font-size:.8rem;
+margin-left:-2px;
+margin-right:-2px;
+}
+
+.nav-links{
+flex-wrap:wrap;
+justify-content:center;
+width:100%;
+}
+
+.nav-links a{
+font-size:.9rem;
+padding:8px 14px;
+}
+
+main{
+margin:24px 12px;
+padding:1.8rem 1.2rem;
+border-radius:40px;
+}
+
+.SlE h2{
+font-size:2.2rem;
+}
+
+}
+
+/* DESKTOP FIX */
+@media(min-width:1200px){
+
+header{
+margin:16px auto 0;
+}
+
+}</style>
+</head>
+
+<body>
+<!-- Header -->
+<header>
+<div class="container header-content">
+<div class="logo">
+<span>ingr.in</span>
+</div>
+<nav class="nav-links nav">
+  <style>/* NAV SCROLL */
+.nav{
+overflow-x:auto;
+white-space:nowrap;
+scroll-behavior:smooth;
+-webkit-overflow-scrolling:touch;
+}
+
+/* hide scrollbar */
+.nav::-webkit-scrollbar{
+display:none;
+}
+
+.nav{
+-ms-overflow-style:none;
+scrollbar-width:none;
+}
+
+/* links inline */
+.nav-links{
+display:inline-flex;
+flex-wrap:nowrap;
+gap:2.5px;
+}
+
+/* link fix */
+.nav-links a{
+display:inline-flex;
+white-space:nowrap;
+}</style>
+<a href="/?sr=home"><i class="fas fa-home"></i> Home</a>
+<a href="/?sr=about"><i class="fas fa-info-circle"></i> About</a>
+<a href="/?sr=services"><i class="fas fa-envelope"></i> Contact</a>
+</nav>
+</div>
+</header>
+
+<!-- Main -->
+<main class="sr-content">
+<!-- Dynamic content will be loaded here -->
+</main>
+
+<!-- Footer -->
+<footer id="footer">
+<div class="footer-title">
+<span style="color: #63E6BE;">&hearts;🅘🅝🅖🅡.🅘🅝</span>
+</div>
+<div class="footer-content">
+<div class="footer-links" style="grid-template-columns:2fr">
+
+<a href="https://m.facebook.com/61576547710874/" class="fbtn facebook">
+<i class="fab fa-facebook-f"></i>
+<span>Facebook</span>
+</a>
+
+<a href="#" class="fbtn twitter">
+<i class="fab fa-twitter"></i>
+<span>Twitter</span>
+</a>
+
+<a href="https://www.instagram.com/social_ingr.in?" class="fbtn instagram">
+<i class="fab fa-instagram"></i>
+<span>Instagram</span>
+</a>
+
+<a href="#" class="fbtn linkedin">
+<i class="fab fa-linkedin"></i>
+<span>LinkedIn</span>
+</a>
+<style>
+.footer-links{
+display:flex;
+flex-wrap:wrap;
+justify-content:center;
+gap:14px;
+}
+
+.fbtn{
+display:flex;
+align-items:center;
+gap:8px;
+padding:10px 18px;
+border-radius:40px;
+font-weight:600;
+text-decoration:none;
+color:#1e1b4b;
+background:rgba(255,255,255,.6);
+backdrop-filter:blur(10px);
+border:1px solid rgba(255,255,255,.7);
+box-shadow:0 6px 16px rgba(0,0,0,.08);
+}
+
+.fbtn i{
+font-size:1rem;
+}
+
+.fbtn:hover{
+transform:translateY(-4px) scale(1.05);
+box-shadow:0 12px 22px rgba(0,0,0,.15);
+color:white;
+}
+
+/* brand hover colors */
+
+.facebook:hover{
+background:#1877f2;
+}
+
+.twitter:hover{
+background:#1da1f2;
+}
+
+.instagram:hover{
+background:linear-gradient(45deg,#f58529,#dd2a7b,#8134af);
+}
+
+.linkedin:hover{
+background:#0077b5;
+}</style>
+</div>
+<div class="copyright">
+<i class="fa-brands fa-square-bluesky"></i> 2025 Ingr.in — <a href="https://sn.ingr.in" style="color:var(--light); text-decoration:none; cursor:pointer;"><span style="color: #2dd4bf;">All Rights Reserved | Privacy Policy | Terms of Service</span></a>
+</div>
+<div class="from-orange-100">
+<span style="
+background-image:
+linear-gradient(greenyellow, gold, hotpink, SpringGreen),
+linear-gradient(gold, greenyellow, deeppink, darkblue),
+linear-gradient(SpringGreen, #00FF7F, magenta, gold),
+linear-gradient(magenta, SpringGreen, Fuchsia, #377af5);
+font-size: 1.8rem;
+font-weight:bold; font-style:italic;
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+display: inline-block;">
+<i class="fa-brands fa-square-bluesky"></i>
+<span style="font-family: 'Great Vibes', 'Alex Brush', 'Dancing Script', cursive, serif;">&nbsp;Power&nbsp;By&nbsp;&hearts;ꈜꌈꌅꌈꌈ</span>&nbsp;
+</span>
+</div>
+</div>
+</footer>
+
+<!-- Back to top button -->
+<div class="back-to-top" id="backToTop">
+<i class="fas fa-chevron-up"></i>
+</div>
+
+<script>
+// ===== Elements =====
+const main = document.querySelector("main");
+const navLinks = document.querySelectorAll(".nav a");
+
+// ===== Allowed Sections =====
+function getAllowedSections() {
+let sections = [];
+navLinks.forEach(link => {
+let url = new URL(link.href, window.location.origin);
+let page = url.searchParams.get("sr");
+if (page) sections.push(page);
+});
+return sections;
+}
+
+// ===== Get Section From URL =====
+function getSection() {
+const params = new URLSearchParams(window.location.search);
+return params.get("sr") || "home";
+}
+
+// ===== Validate Section =====
+function validateSection(section, allowed) {
+if (!allowed.includes(section)) {
+return "home";
+}
+return section;
+}
+
+// ===== Load Section Content =====
+async function loadSection(section) {
+try {
+const res = await fetch(`/pages/${encodeURIComponent(section)}.html`);
+
+if (!res.ok) throw new Error("404");
+
+const html = await res.text();
+main.innerHTML = html;
+
+} catch (err) {
+main.innerHTML = `
+<div class="SlE">
+<h2>Sorry</h2>
+<p>${section} temporarily unavailable</p>
+</div>`;
+}
+}
+
+// ===== Highlight Active Nav =====
+function setActiveNav(section) {
+navLinks.forEach(link => {
+if (link.href.includes("sr=" + section)) {
+link.classList.add("active");
+} else {
+link.classList.remove("active");
+}
+});
+}
+
+// ===== Router Init =====
+function initRouter() {
+const allowed = getAllowedSections();
+let section = getSection();
+section = validateSection(section, allowed);
+loadSection(section);
+setActiveNav(section);
+}
+
+// ===== Back To Top =====
+function initBackToTop() {
+const backToTop = document.getElementById("backToTop");
+
+window.addEventListener("scroll", () => {
+backToTop.classList.toggle("visible", window.scrollY > 200);
+});
+
+backToTop.addEventListener("click", () => {
+window.scrollTo({ top: 0, behavior: "smooth" });
+});
+}
+
+// ===== Footer Toggle =====
+function initFooter() {
+const footer = document.getElementById("footer");
+const title = footer.querySelector(".footer-title");
+
+title.addEventListener("click", (e) => {
+e.stopPropagation();
+footer.classList.toggle("active");
+});
+
+document.body.addEventListener("click", (e) => {
+if (!footer.contains(e.target)) {
+footer.classList.remove("active");
+}
+});
+}
+
+// ===== Init All =====
+document.addEventListener("DOMContentLoaded", () => {
+initRouter();
+initBackToTop();
+initFooter();
+});
+</script>
+</body>
+
+</html>
