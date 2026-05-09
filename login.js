@@ -1,4 +1,4 @@
-import mekk from 'mahi/mekk.js';
+import mekk from './mahi/mekk.js';
 
 const loginForm = mekk.form(
 
