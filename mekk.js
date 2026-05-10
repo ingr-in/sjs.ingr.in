@@ -1,7 +1,7 @@
 function html() {
 
   const isNode = (v) =>
-    v instanceof Node;
+  v instanceof Node;
 
   const state = {
     dce: (tag) => document.createElement(tag),
@@ -71,9 +71,7 @@ function html() {
 
           // CLASS
           if (
-            key === '.class' ||
-            key === 'class' ||
-            key === 'className'
+            key === 'class'
           ) {
 
             element.className = value;
@@ -83,7 +81,6 @@ function html() {
 
           // ID
           if (
-            key === '#id' ||
             key === 'id'
           ) {
 
@@ -122,7 +119,7 @@ function html() {
             } else {
 
               element.style.cssText =
-                value;
+              value;
 
             }
 
@@ -204,9 +201,11 @@ function html() {
     },
 
     // STATE
-    setState(key, value) {
+    setState(key,
+      value) {
 
-      state.store.set(key, value);
+      state.store.set(key,
+        value);
 
       return app;
     },
@@ -238,7 +237,7 @@ function html() {
         fn(value);
 
         return () =>
-          listeners.delete(fn);
+        listeners.delete(fn);
       };
 
       return {
@@ -249,7 +248,8 @@ function html() {
     },
 
     // DOM
-    append(parent, ...children) {
+    append(parent,
+      ...children) {
 
       children.forEach(child => {
 
@@ -273,28 +273,29 @@ function html() {
       return parent;
     },
 
-    prepend(parent, ...children) {
+    prepend(parent,
+      ...children) {
 
       [...children]
-        .reverse()
-        .forEach(child => {
+      .reverse()
+      .forEach(child => {
 
-          if (
-            typeof child === 'string' ||
-            typeof child === 'number'
-          ) {
+        if (
+          typeof child === 'string' ||
+          typeof child === 'number'
+        ) {
 
-            parent.prepend(
-              document.createTextNode(child)
-            );
+          parent.prepend(
+            document.createTextNode(child)
+          );
 
-          } else if (isNode(child)) {
+        } else if (isNode(child)) {
 
-            parent.prepend(child);
+          parent.prepend(child);
 
-          }
+        }
 
-        });
+      });
 
       return parent;
     },
@@ -363,11 +364,11 @@ function html() {
       }
 
       state.events
-        .get(element)
-        .push({
-          event,
-          handler
-        });
+      .get(element)
+      .push({
+        event,
+        handler
+      });
 
       return app;
     },
@@ -388,7 +389,7 @@ function html() {
       } else {
 
         const list =
-          state.events.get(element) || [];
+        state.events.get(element) || [];
 
         list.forEach(e => {
 
@@ -434,9 +435,9 @@ function html() {
     js(src, options = {}) {
 
       const script =
-        document.createElement(
-          'script'
-        );
+      document.createElement(
+        'script'
+      );
 
       script.src = src;
 
@@ -456,9 +457,9 @@ function html() {
     css(href, options = {}) {
 
       const link =
-        document.createElement(
-          'link'
-        );
+      document.createElement(
+        'link'
+      );
 
       link.rel = 'stylesheet';
 
@@ -515,7 +516,7 @@ function html() {
       return template.replace(
         /\{\{(\w+)\}\}/g,
         (_, key) =>
-          data[key] ?? ''
+        data[key] ?? ''
       );
     },
 
@@ -529,7 +530,7 @@ function html() {
     fragment(...children) {
 
       const frag =
-        document.createDocumentFragment();
+      document.createDocumentFragment();
 
       children.forEach(child => {
 
@@ -594,7 +595,7 @@ function html() {
   tags.forEach(tag => {
 
     app[tag] =
-      app.createTagHandler(tag);
+    app.createTagHandler(tag);
 
   });
 
@@ -612,16 +613,18 @@ function html() {
     'range'
   ].forEach(type => {
 
-    app.input[type] = (...args) => {
+      app.input[type] = (...args) => {
 
-      return app.input(
-        { type },
-        ...args
-      );
+        return app.input(
+          {
+            type
+          },
+          ...args
+        );
 
-    };
+      };
 
-  });
+    });
 
   return app;
 }
