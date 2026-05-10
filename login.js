@@ -2,34 +2,46 @@ import mekk from './mahi/mekk.js';
 
 const loginForm = mekk.form(
 
-  { .class: 'login-form' },
-  { #id: 'loginForm' },
+  {
+    'class': 'login-form'
+  },
+  {
+    'id': 'loginForm'
+  },
 
   mekk.h2(
     'Login',
-    { .class: 'login-title' }
+    {
+      'class': 'login-title'
+    }
   ),
 
   mekk.div(
 
-    { .class: 'form-group' },
+    {
+      'class': 'form-group'
+    },
 
     mekk.label(
       'Email',
-      { for: 'email' }
+      {
+        for: 'email'
+      }
     ),
 
     mekk.input.email(
 
-      { #id: 'email' },
+      {
+        'id': 'email'
+      },
 
       {
-        .class: 'form-control'
+        'class': 'form-control'
       },
 
       {
         placeholder:
-          'Enter email'
+        'Enter email'
       },
 
       {
@@ -42,24 +54,30 @@ const loginForm = mekk.form(
 
   mekk.div(
 
-    { .class: 'form-group' },
+    {
+      'class': 'form-group'
+    },
 
     mekk.label(
       'Password',
-      { for: 'password' }
+      {
+        for: 'password'
+      }
     ),
 
     mekk.input.password(
 
-      { #id: 'password' },
+      {
+        'id': 'password'
+      },
 
       {
-        .class: 'form-control'
+        'class': 'form-control'
       },
 
       {
         placeholder:
-          'Enter password'
+        'Enter password'
       },
 
       {
@@ -75,8 +93,8 @@ const loginForm = mekk.form(
     'Login',
 
     {
-      .class:
-        'btn btn-primary'
+      'class':
+      'btn btn-primary'
     },
 
     {
@@ -91,14 +109,14 @@ const loginForm = mekk.form(
           e.preventDefault();
 
           const email =
-            mekk.findById(
-              'email'
-            ).value;
+          mekk.findById(
+            'email'
+          ).value;
 
           const password =
-            mekk.findById(
-              'password'
-            ).value;
+          mekk.findById(
+            'password'
+          ).value;
 
           console.log({
             email,
@@ -120,57 +138,57 @@ const loginForm = mekk.form(
 
 // STYLE
 const style =
-  document.createElement(
-    'style'
-  );
+document.createElement(
+  'style'
+);
 
 style.textContent = `
 body{
-  margin:0;
-  font-family:Arial;
-  background:#f5f5f5;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  height:100vh;
+margin:0;
+font-family:Arial;
+background:#f5f5f5;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
 }
 
 .login-form{
-  width:320px;
-  background:white;
-  padding:25px;
-  border-radius:12px;
-  box-shadow:0 4px 15px rgba(0,0,0,.1);
+width:320px;
+background:white;
+padding:25px;
+border-radius:12px;
+box-shadow:0 4px 15px rgba(0,0,0,.1);
 }
 
 .login-title{
-  margin-bottom:20px;
-  text-align:center;
+margin-bottom:20px;
+text-align:center;
 }
 
 .form-group{
-  margin-bottom:15px;
+margin-bottom:15px;
 }
 
 .form-control{
-  width:100%;
-  padding:10px;
-  border:1px solid #ccc;
-  border-radius:6px;
-  box-sizing:border-box;
+width:100%;
+padding:10px;
+border:1px solid #ccc;
+border-radius:6px;
+box-sizing:border-box;
 }
 
 .btn{
-  width:100%;
-  padding:10px;
-  border:none;
-  border-radius:6px;
-  cursor:pointer;
+width:100%;
+padding:10px;
+border:none;
+border-radius:6px;
+cursor:pointer;
 }
 
 .btn-primary{
-  background:#2563eb;
-  color:white;
+background:#2563eb;
+color:white;
 }
 `;
 
