@@ -1,1 +1,20 @@
+/* Wedding-style homepage */
+.home-page {
+  font-size: 20px;
+  font-family: 'Great Vibes', 'Dancing Script', 'Pacifico', cursive;
+  background: linear-gradient(135deg, #00ff7f, #ff1493);
+  color: white;
+  text-align: center;
+  padding: 40px;
+  min-height: 100vh;
+}
 
+/* Optional: add this if you want gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, springgreen, deeppink);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-family: 'Great Vibes', cursive;
+  font-size: 48px;
+}
