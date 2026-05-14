@@ -1,23 +1,29 @@
 /* Wedding-style homepage */
 .home-page {
   font-size: 20px;
+  /* 优雅的手写字体，需要提前在HTML中引入Google Fonts或类似服务 */
   font-family: 'Great Vibes', 'Dancing Script', 'Pacifico', cursive;
-	color: linear-gradient(135deg, #00ff7f, #ff1493);
+  /* 注意：color属性不支持渐变，此处的写法不会生效，请使用下方 gradient-text 类实现渐变文字 */
+  color: linear-gradient(135deg, #00ff7f, #ff1493); 
   background-color: whitesmoke;
   text-align: center;
   padding: 40px;
-  min-height: 10vh;
+  min-height: 10vh; /* 最小高度较小，您可以根据需要调整为 100vh */
 }
 
-/* Optional: add this if you want gradient text */
+/* 渐变文字样式 - 适用于需要彩色渐变的标题或文本 */
 .gradient-text {
   background: linear-gradient(135deg, springgreen, deeppink);
+  /* 将背景裁剪到文字区域，实现渐变文字效果 */
   -webkit-background-clip: text;
   background-clip: text;
+  /* 文字本身透明，让背景渐变透出来 */
   color: transparent;
   font-family: 'Great Vibes', cursive;
   font-size: 48px;
 }
-.h1,.h2{
-  font-size:38px;
+
+/* 标题基础样式，字号较大 */
+.h1, .h2 {
+  font-size: 38px;
 }
