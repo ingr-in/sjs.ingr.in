@@ -2,8 +2,8 @@
 .home-page {
   font-size: 20px;
   font-family: 'Great Vibes', 'Dancing Script', 'Pacifico', cursive;
-  background: linear-gradient(135deg, #00ff7f, #ff1493);
-  color: white;
+	color: linear-gradient(135deg, #00ff7f, #ff1493);
+  background-color: whitesmoke;
   text-align: center;
   padding: 40px;
   min-height: 10vh;
@@ -19,5 +19,5 @@
   font-size: 48px;
 }
 .h1,.h2{
-  font-size:18px;
+  font-size:38px;
 }
