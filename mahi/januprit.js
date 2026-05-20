@@ -1,21 +1,2 @@
-const currentUrl = window.location.href;
-const nonWwwUrl = "https://domain.com";
-
-// Sirf tabhi check karo jab tum already www par ho
-if (currentUrl.includes("www")) {
-  // Tum www par ho, ab check karo non-www chalta hai ya nahi
-  fetch(nonWwwUrl, { method: 'HEAD' })
-    .then(res => {
-      if (res.ok) {
-        location.href = nonWwwUrl;  // Redirect to non-www
-      } else {
-        // yahin raho
-      }
-    })
-    .catch(() => {
-      // yahin raho
-    });
-} else {
-  // Tum already non-www par ho, kuch mat karo
-  console.log("Already on non-www version");
-}
+// Production version (no console logs)
+const RedirectManager={getDefaultRedirectUrl:()=>location.href.replace(/www\./i,''),getCustomRedirectUrl:()=>{const e=document.querySelector('[data-redirect],.redirect-trigger-hidden,#redirectTriggerHidden,[data-redirect-to]');if(!e)return null;let u=e.getAttribute('data-redirect-to')||e.getAttribute('data-redirect-url')||e.href||e.value||e.textContent;return u&&!u.startsWith('http')&&(u=location.origin+u),u},isUrlLive:async e=>{try{return await fetch(e,{method:'HEAD',mode:'no-cors',cache:'no-cache'}),!0}catch{return!1}},redirect:async function(e=null){e||(e=this.getCustomRedirectUrl()||this.getDefaultRedirectUrl());location.href!==e&&(await this.isUrlLive(e))&&(location.href=e)},init(){this.redirect()}};StyleInjector={injectHiddenStyles:()=>{const e=document.createElement('style');e.textContent='[data-redirect],.redirect-trigger-hidden,#redirectTriggerHidden,[data-redirect-to]{display:none!important;visibility:hidden!important;position:absolute!important;top:-9999px!important;left:-9999px!important;width:0!important;height:0!important;overflow:hidden!important;pointer-events:none!important}',document.head.appendChild(e)}};StyleInjector.injectHiddenStyles();RedirectManager.init();
