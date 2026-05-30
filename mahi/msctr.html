@@ -1,0 +1,13 @@
+<xs-script src="app.xsjsf"></xs-script>
+
+<script>
+document
+.querySelectorAll("xs-script")
+.forEach(async e=>{
+    let code=await fetch(
+        e.getAttribute("src")
+    ).then(r=>r.text());
+
+    new Function(code)();
+});
+</script>
